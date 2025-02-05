@@ -1,27 +1,23 @@
 import { useState } from "react";
 import { useNavigate, Link} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginThunk } from "../store/slices/authSlice";
 import "../css/Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { loading, error, user } = useSelector((state) => state.auth);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    const response = await fetch("http://localhost:5000/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-      credentials: "include",
-    });
-
-    const data = await response.json();
-    if (response.ok) {
+    const resultAction = await dispatch(loginThunk({ email, password }));
+    if (loginThunk.fulfilled.match(resultAction)) {
+      // navigate upon successful login
       navigate("/");
-    } else {
-      alert(data.message);
     }
   };
 
@@ -44,15 +40,16 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button className="login-button" type="submit">
-            登入
+          <button className="login-button" type="submit" disabled={loading}>
+          {loading ? "登入中..." : "登入"}
           </button>
         </form>
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
         {/* Register Link */}
         <div className="register-link">
           <span>還沒有帳號嗎？ </span>
-          <Link to="/register">立即註冊</Link>
+          <Link to="/signup-first">立即註冊</Link>
         </div>
       </div>
     </div>

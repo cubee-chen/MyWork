@@ -1,16 +1,23 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutThunk } from "../store/slices/authSlice";
 import "../css/Header.css";
 
 function Header() {
   const location = useLocation();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
   const [showSearch, setShowSearch] = useState(false);
   const [queryselect, setQueryselect] = useState("");
   const [scrolled, setScrolled] = useState(false);
 
-  const handleLogout = () => {
-    
-  }
+  const handleLogout = async () => {
+    await dispatch(logoutThunk());
+    alert("登出成功");
+    // user is now null in redux store
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +34,11 @@ function Header() {
     };
   }, []);
 
-  if (location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/register-setup")
+  if (
+    location.pathname === "/login" ||
+    location.pathname === "/signup-first" ||
+    location.pathname === "/signup-second"
+  )
     return (
       <nav className="header-simplified">
         <div className="logo">
@@ -43,9 +54,12 @@ function Header() {
           <Link to="/">Pinecraft</Link>
         </div>
         <div className="nav-links">
-
-            <Link to="/login">登入</Link>
+          {/* If user is logged in, show "登出"; otherwise show "登入" */}
+          {user ? (
             <button onClick={handleLogout}>登出</button>
+          ) : (
+            <Link to="/login">登入</Link>
+          )}
 
           <Link to="/about-us">關於我們</Link>
           <button

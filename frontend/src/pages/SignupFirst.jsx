@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/Login.css";
 
-function Register() {
+function SignupFirst() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +19,7 @@ function Register() {
 
     const data = await response.json();
     if (response.ok) {
-      navigate(`/register-setup?email=${encodeURIComponent(email)}`);
+      navigate(`/signup-second?email=${encodeURIComponent(email)}`);
     } else {
       alert(data.message);
     }
@@ -66,4 +66,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default SignupFirst;

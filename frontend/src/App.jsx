@@ -6,11 +6,12 @@ import Home from "./pages/Home";
 import TemplateDeliver from "./pages/TemplateDeliver";
 import AboutUs from "./pages/AboutUs";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
-import RegisterFinal from "./pages/RegisterFinal";
+import ProtectedRoute from "./components/ProtectedRoute";
+import SignupSecond from "./pages/SignupSecond";
+import SignupFirst from "./pages/SignupFirst";
+import NotFound from "./pages/NotFound";
 
 function App() {
-
   return (
     <>
       <Header />
@@ -19,9 +20,17 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/register-setup" element={<RegisterFinal />} />
-          <Route path="/template-deliver" element={<TemplateDeliver />} />
+          <Route path="/signup-first" element={<SignupFirst />} />
+          <Route path="/signup-second" element={<SignupSecond />} />
+          <Route
+            path="/template-deliver"
+            element={
+              <ProtectedRoute>
+                <TemplateDeliver />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

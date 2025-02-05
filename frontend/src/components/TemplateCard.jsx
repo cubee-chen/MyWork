@@ -6,26 +6,8 @@ function TemplateCard({ template, isReversed }) {
 
   const handleBuyClick = async (e) => {
     e.preventDefault();
-    
-    try {
-      // Check if user is logged in by hitting /profile
-      const response = await fetch("http://localhost:5000/api/auth/profile", {
-        method: "GET",
-        credentials: "include", // Important for sending the cookie
-      });
 
-      if (response.ok) {
-        // We have a valid token cookie -> user is logged in
-        navigate(`/template-deliver?templatename=${template.name}`);
-      } else {
-        // Not logged in -> redirect to /login
-        navigate("/login");
-      }
-    } catch (error) {
-      console.error("Error checking login status:", error);
-      // If there's an error, assume user is not logged in
-      navigate("/login");
-    }
+    navigate(`/template-deliver?templatename=${template.name}`);
   };
 
   return (
