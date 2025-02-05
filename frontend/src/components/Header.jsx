@@ -8,6 +8,10 @@ function Header() {
   const [queryselect, setQueryselect] = useState("");
   const [scrolled, setScrolled] = useState(false);
 
+  const handleLogout = () => {
+    
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     alert(`You searched for ${queryselect}!`);
@@ -22,11 +26,6 @@ function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-
-const isAuthenticated = !!localStorage.getItem("token");
-const user = localStorage.getItem("username");
-
 
   if (location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/register-setup")
     return (
@@ -44,19 +43,9 @@ const user = localStorage.getItem("username");
           <Link to="/">Pinecraft</Link>
         </div>
         <div className="nav-links">
-          {/* 如果已登入，顯示大頭像 + username，否則顯示 Login */}
-          {isAuthenticated ? (
-            <div className="profile-container">
-              <img
-                src="/images/avatar.png"
-                alt="Profile"
-                className="profile-pic"
-              />
-              <span className="username">{user}</span>
-            </div>
-          ) : (
+
             <Link to="/login">登入</Link>
-          )}
+            <button onClick={handleLogout}>登出</button>
 
           <Link to="/about-us">關於我們</Link>
           <button

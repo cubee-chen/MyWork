@@ -1,13 +1,11 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const sgMail = require("@sendgrid/mail");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const User = require("../models/user.model.js");
 const Template = require("../models/template.model.js");
 
 let tempUsers = {}; // Temporary storage for step 1 registration
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // First step: Store user credentials temporarily
 const registerTemp = async (req, res) => {
@@ -82,28 +80,39 @@ const userLogin = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1hr",
     });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false, // set to true in production when using HTTPS
+      sameSite: "lax", 
+    });
+
     res.status(200).json({
       message: "Login successful",
-      token: token,
       username: user.username,
     });
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
+const userLogout = (req, res) => {
+  res.clearCookie("token",{
+    httpOnly: true,
+    secure: false, // set to true in production when using HTTPS
+    sameSite: "lax", 
+  });
+  res.status(200).json({ message: "登出成功" });
+}
+
 const getUserProfile = async (req, res) => {
   try {
-    // 取得請求標頭中的 JWT Token
-    const token = req.header("Authorization").replace("Bearer ", "");
-    if (!token) {
-      return res.status(401).json({ message: "未提供 Token" });
-    }
+    // req.user was set by verifyToken middleware
+    const userId = req.user.userId;
 
-    // 驗證 Token，並獲取 `userId`
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findById(decoded.userId).select("-password"); // 不回傳密碼
-
+    // Get user from DB (omit password)
+    const user = await User.findById(userId).select("-password");
     if (!user) {
       return res.status(404).json({ message: "用戶不存在" });
     }
@@ -111,7 +120,7 @@ const getUserProfile = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.error("獲取用戶資訊錯誤：", error);
-    res.status(401).json({ message: "無效的 Token" });
+    res.status(500).json({ message: "伺服器錯誤，請稍後再試" });
   }
 };
 
@@ -162,6 +171,7 @@ module.exports = {
   registerTemp,
   finalizeRegistration,
   userLogin,
+  userLogout,
   getUserProfile,
   purchasedTemplate,
 };

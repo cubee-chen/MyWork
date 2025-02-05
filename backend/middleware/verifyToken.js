@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
   try {
-    const token = req.header("Authorization").replace("Bearer ", "");
+    const token = req.cookies.token;
     if (!token) {
       return res.status(401).json({ message: "未提供 Token，請先登入" });
     }

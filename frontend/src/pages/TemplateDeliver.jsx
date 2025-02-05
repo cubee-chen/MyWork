@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import "../css/ProductDeliver.css";
+import "../css/TemplateDeliver.css";
 
-function ProductDeliver() {
+function TemplateDeliver() {
   const [user, setUser] = useState(null);
   const [isPurchased, setIsPurchased] = useState(false);
   const [notionTemplateUrl, setNotionTemplateUrl] = useState(""); // Store template URL
@@ -12,20 +12,11 @@ function ProductDeliver() {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.error("No token found, redirecting to login...");
-        navigate("/login");
-        return;
-      }
 
       try {
         const response = await fetch("http://localhost:5000/api/auth/profile", {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+          credentials: "include",
         });
 
         if (response.ok) {
@@ -33,7 +24,6 @@ function ProductDeliver() {
           setUser(data);
         } else {
           console.error("Failed to fetch user profile");
-          localStorage.removeItem("token");
           navigate("/login");
         }
       } catch (error) {
@@ -108,4 +98,4 @@ function ProductDeliver() {
   );
 }
 
-export default ProductDeliver;
+export default TemplateDeliver;

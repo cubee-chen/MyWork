@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require('mongoose')
 const dotenv = require('dotenv').config();
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const userRoute = require("./routes/user.route.js");
 const templateRoute = require("./routes/template.route.js");
@@ -9,8 +10,12 @@ const app = express();
 
 // middleware configuration
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173"],  // your client’s origin
+  credentials: true,                  // allow sending cookies
+}));
 
 // test
 app.get("/", (req, res) => {

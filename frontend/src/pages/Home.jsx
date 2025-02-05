@@ -1,41 +1,33 @@
 import { useState, useEffect } from "react";
-import ProductCard from "../components/ProductCard";
+import TemplateCard from "../components/TemplateCard";
 import "../css/Home.css";
 
 function Home() {
-  const [products, setProducts] = useState([]);
+  const [templates, setTemplates] = useState([]);
 
   useEffect(() => {
     const fetchTemplates = async () => {
-      try {
-        console.log("Fetching templates...");
-        
-        const response = await fetch("http://localhost:5000/api/template/get");
-
-        console.log("Response status:", response.status);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+      for (let i = 0; i < 3; i++) {
+        try {
+          const response = await fetch(
+            "http://localhost:5000/api/template/get"
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+          setTemplates(data);
+          return; // Exit once successful
+        } catch (error) {
+          console.error("Error fetching templates:", error);
+          // Optional: Wait a second before retrying
+          await new Promise((resolve) => setTimeout(resolve, 10000));
         }
-        const data = await response.json();
-        
-        console.log("Templates received:", data);
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching templates:", error);
       }
     };
 
     fetchTemplates();
   }, []);
-
-
-  // const products = [{
-  //   "_id": "60a7d9d5d5",
-  //   "name": "Pinecraft",
-  //   "description": "智慧運算、效能進化",
-  //   "price": 1999,
-  // }];
 
   return (
     <div className="home">
@@ -55,10 +47,10 @@ function Home() {
       </section>
       {/* products demo */}
       <div className="products-grid">
-        {products.map((product, index) => (
-          <ProductCard
-            key={product._id}
-            product={product}
+        {templates.map((template, index) => (
+          <TemplateCard
+            key={template._id}
+            template={template}
             isReversed={index % 2 !== 0}
           />
         ))}
