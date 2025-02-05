@@ -41,6 +41,27 @@ export const logoutThunk = createAsyncThunk("auth/logout", async () => {
   return null; // payload
 });
 
+// Fetch user profile from cookie-based session
+export const fetchUserProfileThunk = createAsyncThunk(
+    "auth/fetchProfile",
+    async (_, { rejectWithValue }) => {
+      try {
+        const resp = await fetch("http://localhost:5000/api/auth/profile", {
+          credentials: "include", // important to include session cookie
+        });
+        if (!resp.ok) {
+          // e.g. 401 if not logged in, or 500
+          throw new Error("Failed to fetch profile");
+        }
+        const userData = await resp.json();
+        return userData; // => action.payload in fulfilled
+      } catch (err) {
+        return rejectWithValue(err.message);
+      }
+    }
+  );
+
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -69,6 +90,22 @@ const authSlice = createSlice({
       // LOGOUT
       .addCase(logoutThunk.fulfilled, (state) => {
         state.user = null;
+      })
+
+      // FETCH PROFILE
+      .addCase(fetchUserProfileThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUserProfileThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(fetchUserProfileThunk.rejected, (state, action) => {
+        state.loading = false;
+        // If fetch fails (e.g. not logged in), we can set user to null
+        state.user = null;
+        state.error = action.payload;
       });
   },
 });

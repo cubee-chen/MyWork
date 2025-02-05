@@ -53,23 +53,27 @@ function AboutUs() {
   };
 
   return (
-    <>
-      {/* 標題 */}
+    <div className="about-us-container">
+      {/* Hero Section */}
       <div className="team-hero-container">
         <section className="team-hero">
-          <img src="/team-members/team.jpg" alt="NTU CTC 團隊合照" />
+          {/* 
+            If you want to keep <img>:
+            <img src="/team-members/team.jpg" alt="NTU CTC 團隊合照" />
+          */}
           <div className="intro-overlay">
             <h1>大家好，我們是 NTU CTC！</h1>
             <p>
-              我們是一支專注於 Notion
-              模板與演算法驅動的生產力工具的創新團隊，
-              我們致力於打造最智慧化的數位工具，提升使用者效率！
+              我們是一支專注於開發 Notion 模板的新創團隊，
+              透過理論知識與演算法，期望打造最智慧化的數位工具，提升生產效率！
             </p>
           </div>
         </section>
       </div>
-      <div className="about-us">
-        {/* CEO */}
+
+      {/* Main content */}
+      <div className="about-us-content">
+        {/* CEO Section */}
         <section className="team-section">
           <h2>執行長</h2>
           <div className="team-grid">
@@ -83,6 +87,7 @@ function AboutUs() {
             ))}
           </div>
         </section>
+
         {/* 研發部 */}
         <section className="team-section">
           <h2>研發部</h2>
@@ -97,6 +102,7 @@ function AboutUs() {
             ))}
           </div>
         </section>
+
         {/* 營銷部 */}
         <section className="team-section">
           <h2>營銷部</h2>
@@ -112,7 +118,7 @@ function AboutUs() {
           </div>
         </section>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -21,7 +21,7 @@ function Home() {
         } catch (error) {
           console.error("Error fetching templates:", error);
           // Optional: Wait a second before retrying
-          await new Promise((resolve) => setTimeout(resolve, 10000));
+          await new Promise((resolve) => setTimeout(resolve, 3000));
         }
       }
     };
@@ -42,7 +42,7 @@ function Home() {
       <section className="intro-section">
         <h2>打造屬於你的生產力套件</h2>
         <p>
-          Pinecraft致力於打造Notion模板，並結合後端伺服器的演算法驅動，提供最佳的生產力工具。
+          PINECRAFT 致力於開發 Notion 模板，並且整合後端伺服器與 AI 驅動，提供最佳的生產力工具。
         </p>
       </section>
       {/* products demo */}

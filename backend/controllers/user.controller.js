@@ -151,7 +151,7 @@ const purchasedTemplate = async (req, res) => {
     }
 
     // update user's purchasedTemplates array
-    user.purchasedTemplates.push(template._id);
+    user.purchasedTemplates.push(templateName);
     await user.save();
 
     console.log("User purchase saved:", user);

@@ -16,7 +16,7 @@ function SignupSecond() {
             <ul className="step-list-caution">
               <li>本系統會請求您的 Notion API Token</li>
               <li>請確保授權的範圍足夠使用該模板</li>
-              <li>我們不會儲存您的 Token</li>
+              <li>誤盜用他人的 API Token</li>
             </ul>
             <button className="step-button" onClick={() => setStep(2)}>
               我同意，開始授權

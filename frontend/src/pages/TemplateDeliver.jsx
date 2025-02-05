@@ -1,39 +1,18 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserProfileThunk } from "../store/slices/authSlice";
 import "../css/TemplateDeliver.css";
 
 function TemplateDeliver() {
-  const [user, setUser] = useState(null);
   const [isPurchased, setIsPurchased] = useState(false);
   const [notionTemplateUrl, setNotionTemplateUrl] = useState(""); // Store template URL
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const templateName = searchParams.get("templatename");
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-
-      try {
-        const response = await fetch("http://localhost:5000/api/auth/profile", {
-          method: "GET",
-          credentials: "include",
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data);
-        } else {
-          console.error("Failed to fetch user profile");
-          navigate("/login");
-        }
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-        navigate("/login");
-      }
-    };
-
-    fetchProfile();
-  }, [navigate]);
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const handlePurchase = async () => {
     console.log("button-clicked");
@@ -48,14 +27,18 @@ function TemplateDeliver() {
         },
         body: JSON.stringify({
           email: user.email,
-          templateName: templateName,
+          templateName,
         }),
       });
 
       const data = await response.json();
+
       if (response.ok) {
         setIsPurchased(true);
         setNotionTemplateUrl(data.notionUrl);
+        // Refresh user in Redux so purchased history is updated immediately
+        dispatch(fetchUserProfileThunk());
+
       } else {
         alert(data.message);
       }

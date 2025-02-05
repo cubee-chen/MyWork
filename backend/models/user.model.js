@@ -5,7 +5,10 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     notionToken: { type: String, required: true },
-    purchasedTemplates: [{ type: mongoose.Schema.Types.ObjectId, ref: "Template" }],
+    purchasedTemplates: {
+      type: [String], // array of template names
+      default: [],
+    },
   },
   {
     timestamps: true,

@@ -1,137 +1,94 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;700&display=swap");
 
+/* Header container */
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(to right, #1a3a55, #6385a8);
-    color: white;
-    transition: background 0.3s ease, color 0.3s ease;
-    padding: 15px 0;
-    z-index: 1000;
-  }
-  
-  .header.scrolled {
-    background: white;
-    color: black;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-.header-simplified {
-    background: transparent;
-    text-align: center;
-    padding: 20px;
-    font-size: 22px;
-    font-weight: bold;
-}
-.header-simplified a {
-    text-decoration: none;
-    color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to right, #1a3a55, #6385a8);
+  color: white;
+  transition: background 0.3s ease, color 0.3s ease;
+  padding: 15px 0;
+  z-index: 1000;
 }
 
-  .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 85%;
-    margin: 0 auto;
-  }
+/* When scrolled, switch to light background */
+.header.scrolled {
+  background: white;
+  color: black;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
+/* Inner container with spacing */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 85%;
+  margin: 0 auto;
+}
+
+/* Logo */
 .logo a {
-    font-family: 'Orbitron', sans-serif;
-    text-transform: uppercase;
-    font-size: 22px;
-    font-weight: bold;
-    text-decoration: none;
-    color: inherit;
-    letter-spacing: 3px;
+  font-family: "Orbitron", sans-serif;
+  text-transform: uppercase;
+  font-size: 22px;
+  font-weight: bold;
+  text-decoration: none;
+  color: inherit;
+  letter-spacing: 3px;
 }
 
+/* Navigation links container */
 .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-.nav-links a {
-    text-decoration: none;
-    color: inherit;
-    font-size: 16px;
-    transition: color 0.3s ease;
+/* Style for both <a> and <button> inside .nav-links */
+.nav-links a,
+.nav-links button {
+  color: inherit;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-family: "Poppins", sans-serif;
 }
 
-.nav-links a:hover {
-    color: #007bff;
-  }
-
-/* Search Bar */
-.search-form-poppup {
-    position: absolute;
-    top: 60px;
-    right: 50px;
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+/* Hover style for links/buttons (DARK header) */
+.nav-links a:hover,
+.nav-links button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff; /* stands out against the dark gradient */
 }
 
-.search-form-popup input {
-    border: 1px solid #ccc;
-    padding: 8px;
-    font-size: 14px;
+/* Hover style for links/buttons (LIGHT header) */
+.header.scrolled .nav-links a:hover,
+.header.scrolled .nav-links button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #000; /* stands out against the white background */
 }
 
-.search-bar {
-    width: 300px;
-    padding: 10px;
-    font-size: 18px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    outline: none;
-    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+/* The 'search-button' icon (optional tweak) */
+.search-button {
+  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: inherit;
 }
 
-.search-icon {
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-    color: white;
-}
-
+/* (Optional) hover style for the search button */
 .search-button:hover {
-    background-color: #0056b3;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
-.close-search {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    color: red;
-}
-
-/* Profile Container */
-.profile-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-}
-
-.profile-pic {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.username {
-    font-size: 16px;
-    font-weight: bold;
-    color: inherit;
-}

@@ -44,7 +44,7 @@ function Login() {
           {loading ? "登入中..." : "登入"}
           </button>
         </form>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
 
         {/* Register Link */}
         <div className="register-link">

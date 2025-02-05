@@ -1,118 +1,126 @@
-.team-hero-container {
+/* Container for the entire page */
+.about-us-container {
     width: 100%;
-    padding: 60px 20px;
-    text-align: center;
-}
-
-.about-us {
-    width: 100%;
-    max-width: 1200px;
     margin: 0 auto;
-    padding: 60px 20px;
-    text-align: center;
-}
-
-/* hero and intro */
-.team-hero {
+    padding: 0; /* we can control sections individually */
+    font-family: "Poppins", sans-serif;
+  }
+  
+  /* Hero Section */
+  .team-hero-container {
+    width: 100%;
     position: relative;
-    width: 100vw;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+  
+  .team-hero {
+    position: relative;
+    width: 100%;
     height: 500px;
     overflow: hidden;
-    margin-bottom: 30px;
-}
-
-.team-hero img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(90%);
-}
-
-.intro-overlay {
+    /* Use background-image instead of <img> to ensure no blank space on left */
+    background: url("/team-members/team.jpg") center center / cover no-repeat;
+  }
+  
+  /* If you must keep the <img> approach:
+     .team-hero img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover;  // ensures no blank bars if the image ratio is different
+     }
+  */
+  
+  .intro-overlay {
     position: absolute;
     top: 25%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: white;
+    color: #fff;
     background: rgba(0, 0, 0, 0.4);
-    padding: 20px;
+    padding: 20px 30px;
     border-radius: 8px;
-}
-
-.intro-overlay h1 {
+    max-width: 600px;
+  }
+  
+  .intro-overlay h1 {
     font-size: 36px;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 10px;
-}
-
-.intro-overlay p {
-    font-size: 20px;
-}
-
-/* team section */
-.team-section {
+  }
+  
+  .intro-overlay p {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  /* Main content container */
+  .about-us-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  /* Team Sections */
+  .team-section {
     margin-bottom: 60px;
-}
-
-.team-section h2 {
+  }
+  
+  .team-section h2 {
     font-size: 32px;
     color: #2c3e50;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-weight: 700;
     text-align: left;
-    font-weight: 600;
-}
-
-/* team grid */
-.team-grid {
+    border-left: 5px solid #1a3a55;
+    padding-left: 10px;
+  }
+  
+  /* Team Grid */
+  .team-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
-}
-
-.team-card {
-    background: white;
+  }
+  
+  /* Team Card */
+  .team-card {
+    background: #fff;
+    width: 280px;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 300px;
-    transition: transform 0.3s ease;
-}
-
-.team-card:hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .team-card:hover {
     transform: translateY(-5px);
-}
-
-.team-card img {
-    width: 150px;
-    height: 150px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  .team-card img {
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 15px;
-}
-
-.team-card h3 {
+    border: 3px solid #6385a8; /* subtle border for style */
+  }
+  
+  .team-card h3 {
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 600;
     margin-bottom: 5px;
-}
-
-.team-card p {
+    color: #333;
+  }
+  
+  .team-card p {
     font-size: 16px;
-    color: #777;
-}
-
-.team-photo {
-    width: 100%;
-    max-width: 1000px;
-    margin: 20px auto;
-    text-align: center;
-}
-
-.team-photo img {
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+    color: #666;
+    margin: 4px 0;
+  }
+  
