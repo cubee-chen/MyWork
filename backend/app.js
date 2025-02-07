@@ -27,9 +27,9 @@ app.use(express.urlencoded({ extended: true }));
 // );
 
 // Test route
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello World!");
+// });
 
 // Routes
 app.use("/api/auth", userRoute);
