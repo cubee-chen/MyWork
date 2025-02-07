@@ -7,12 +7,10 @@ services:
     buildCommand: "./build.sh"  # Or, if not using a build script, a command that builds the frontend and backend.
     startCommand: "node app.js" # The command to start your backend server.
     envVars:
-      - key: NODE_ENV
-        value: production
       - key: PORT
         value: "5000"
       # You can either set the following values directly or store them as Render Secrets:
       - key: MONGO_URI
-        fromSecret: MONGO_URI
+        value: "mongodb+srv://cubee0405:B123696828@user.avcqd.mongodb.net/myWork?retryWrites=true&w=majority&appName=User"
       - key: JWT_SECRET
-        fromSecret: JWT_SECRET
+        fromSecret: "_my_super_secret_key"
