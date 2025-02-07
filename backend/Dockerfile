@@ -22,11 +22,12 @@ RUN yarn build
 # Stage 2: Build Backend
 FROM node:20
 WORKDIR /MyWork
-COPY backend/package.json backend/yarn.lock ./ 
-RUN yarn install
+COPY backend/package*.json ./
+WORKDIR /MyWork/backend
+RUN npm install -g nodemon
 # Copy backend source code
 COPY backend/ .
 # Copy the built frontend into backend/build
 COPY --from=frontend-builder /MyWork/frontend/build ./build
 EXPOSE 5000
-CMD ["node", "app.js"]
+CMD ["nodemon", "app.js"]
