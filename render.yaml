@@ -11,6 +11,6 @@ services:
         value: "5000"
       # You can either set the following values directly or store them as Render Secrets:
       - key: MONGO_URI
-        value: "mongodb+srv://cubee0405:B123696828@user.avcqd.mongodb.net/myWork?retryWrites=true&w=majority&appName=User"
+        fromSecret: MONGO_URI
       - key: JWT_SECRET
-        fromSecret: "_my_super_secret_key"
+        fromSecret: JWT_SECRET
