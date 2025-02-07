@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: app-test           # This is the service name on Render
+    env: node
+    plan: free
+    branch: main             # Deploy from the main branch
+    buildCommand: "./build.sh"  # Or, if not using a build script, a command that builds the frontend and backend.
+    startCommand: "node app.js" # The command to start your backend server.
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "5000"
+      # You can either set the following values directly or store them as Render Secrets:
+      - key: MONGO_URI
+        fromSecret: MONGO_URI
+      - key: JWT_SECRET
+        fromSecret: JWT_SECRET
