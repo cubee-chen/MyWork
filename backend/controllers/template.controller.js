@@ -10,7 +10,7 @@ const createTemplate = async (req, res) => {
     }
 }
 
-const getAllTemplates = async (req, res) => {
+const getAllTemplates = async (req, res, next) => {
     try {
         // const response = "Hello World";
         const response = await Template.find({});

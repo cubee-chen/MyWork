@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../css/Login.css";
 
 function SignupFirst() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,7 +13,7 @@ function SignupFirst() {
   const handleTempRegister = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:5000/api/auth/register-temp", {
+    const response = await fetch(`${API_BASE_URL}/api/auth/register-temp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email, password }),

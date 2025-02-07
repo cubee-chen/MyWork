@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 function TokenInputSubmit({ notionToken, setNotionToken }) {
   
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [email, setEmail] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ function TokenInputSubmit({ notionToken, setNotionToken }) {
   const handleFinalSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:5000/api/auth/final-register", {
+    const response = await fetch(`${API_BASE_URL}/api/auth/final-register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, notionToken }),

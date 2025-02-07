@@ -3,31 +3,25 @@ import TemplateCard from "../components/TemplateCard";
 import "../css/Home.css";
 
 function Home() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [templates, setTemplates] = useState([]);
 
   useEffect(() => {
     const fetchTemplates = async () => {
-      for (let i = 0; i < 3; i++) {
-        try {
-          const response = await fetch(
-            "http://localhost:5000/api/template/get"
-          );
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          const data = await response.json();
-          setTemplates(data);
-          return; // Exit once successful
-        } catch (error) {
-          console.error("Error fetching templates:", error);
-          // Optional: Wait a second before retrying
-          await new Promise((resolve) => setTimeout(resolve, 3000));
+      try {
+        // Use the public domain from .env
+        const resp = await fetch(`${API_BASE_URL}/api/template/get`)
+        if (!resp.ok) {
+          throw new Error(`HTTP error! ${resp.status}`);
         }
+        const data = await resp.json();
+        setTemplates(data);
+      } catch (error) {
+        console.error("Error fetching templates:", error);
       }
     };
-
     fetchTemplates();
-  }, []);
+  }, [API_BASE_URL]);
 
   return (
     <div className="home">

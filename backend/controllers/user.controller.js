@@ -66,42 +66,44 @@ const userLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // check if email exists
+    // 1) Check if user exist
     const user = await User.findOne({ email });
-    if (!user)
+    if (!user) {
       return res.status(400).json({ message: "Invalid email or password" });
+    }
 
-    // verify password
+    // 2) Compare password hash
     const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword)
+    if (!validPassword) {
       return res.status(400).json({ message: "Invalid email or password" });
+    }
 
-    // generate JWT token
+    // 3) Generate JWT
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1hr",
+      expiresIn: "1h",
     });
 
+    // 4) Set cross-site cookie (HTTPS, sameSite=none)
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // set to true in production when using HTTPS
-      sameSite: "lax", 
+      secure: true,   // needs HTTPS
+      sameSite: "none",
     });
 
     res.status(200).json({
       message: "Login successful",
       username: user.username,
     });
-
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
 const userLogout = (req, res) => {
   res.clearCookie("token",{
     httpOnly: true,
-    secure: false, // set to true in production when using HTTPS
-    sameSite: "lax", 
+    secure: true, // set to true in production when using HTTPS
+    sameSite: "none", 
   });
   res.status(200).json({ message: "登出成功" });
 }

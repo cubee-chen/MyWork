@@ -5,6 +5,9 @@ import { fetchUserProfileThunk } from "../store/slices/authSlice";
 import "../css/TemplateDeliver.css";
 
 function TemplateDeliver() {
+
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  
   const [isPurchased, setIsPurchased] = useState(false);
   const [notionTemplateUrl, setNotionTemplateUrl] = useState(""); // Store template URL
   const navigate = useNavigate();
@@ -20,7 +23,7 @@ function TemplateDeliver() {
     if (!user || !templateName) return;
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/purchase", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/purchase`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
